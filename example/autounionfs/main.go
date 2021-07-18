@@ -6,10 +6,9 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"os"
 	"time"
-
+	"fmt"
 	"github.com/hanwen/go-fuse/v2/fuse"
 	"github.com/hanwen/go-fuse/v2/fuse/nodefs"
 	"github.com/hanwen/go-fuse/v2/fuse/pathfs"

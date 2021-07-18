@@ -11,7 +11,8 @@ import (
 	"flag"
 	"log"
 	"syscall"
-
+	"time"
+	"math/rand"
 	"github.com/hanwen/go-fuse/v2/fs"
 	"github.com/hanwen/go-fuse/v2/fuse"
 )
@@ -20,10 +21,32 @@ type HelloRoot struct {
 	fs.Inode
 }
 
+func getFunFile()[]byte{
+	retbyte := []byte(RandStringRunes(7))
+	return retbyte
+}
+
+
+func init() {
+    rand.Seed(time.Now().UnixNano())
+}
+
+var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+func RandStringRunes(n int) string {
+    b := make([]rune, n)
+    for i := range b {
+        b[i] = letterRunes[rand.Intn(len(letterRunes))]
+    }
+    return string(b)
+}
+
+
 func (r *HelloRoot) OnAdd(ctx context.Context) {
 	ch := r.NewPersistentInode(
 		ctx, &fs.MemRegularFile{
-			Data: []byte("file.txt"),
+			// Data: []byte("file.txt"),
+			Data: getFunFile(),
 			Attr: fuse.Attr{
 				Mode: 0644,
 			},
